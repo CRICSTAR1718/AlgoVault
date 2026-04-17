@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dash-bg: var(--dash-bg);
+  --color-dash-surface: var(--dash-surface);
+  --color-dash-surface-hover: var(--dash-surface-hover);
+  --color-dash-border: var(--dash-border);
+  --color-dash-text: var(--dash-text);
+  --color-dash-text-muted: var(--dash-text-muted);
+  --color-dash-accent: var(--dash-accent);
+  --color-dash-accent-hover: var(--dash-accent-hover);
+  --color-dash-success: var(--dash-success);
+  --color-dash-warning: var(--dash-warning);
+  --color-dash-danger: var(--dash-danger);
+}
+
+:root {
+  --dash-bg: #0b1120;
+  --dash-surface: #1e293b;
+  --dash-surface-hover: #334155;
+  --dash-border: #334155;
+  --dash-text: #f1f5f9;
+  --dash-text-muted: #94a3b8;
+  --dash-accent: #3b82f6;
+  --dash-accent-hover: #2563eb;
+  --dash-success: #10b981;
+  --dash-warning: #f59e0b;
+  --dash-danger: #ef4444;
+}
+
+.light {
+  --dash-bg: #f8fafc;
+  --dash-surface: #ffffff;
+  --dash-surface-hover: #f1f5f9;
+  --dash-border: #e2e8f0;
+  --dash-text: #0f172a;
+  --dash-text-muted: #64748b;
+  --dash-accent: #3b82f6;
+  --dash-accent-hover: #2563eb;
+  --dash-success: #059669;
+  --dash-warning: #d97706;
+  --dash-danger: #dc2626;
+}
+
+body {
+  background-color: var(--dash-bg);
+  color: var(--dash-text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dash-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dash-surface-hover);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dash-border);
+}
