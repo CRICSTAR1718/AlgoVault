@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useProblems } from "../hooks/useProblems";
+import { PLATFORMS } from "../utils/constants";
 import { CheckCircle } from "lucide-react";
 
 function AddProblemPage() {
@@ -17,6 +18,8 @@ function AddProblemPage() {
     attempts: 1,
     dateSolved: new Date().toISOString().split('T')[0],
     mistake: false,
+    timeComplexity: "",
+    approach: "",
     keyIdea: ""
   });
 
@@ -48,6 +51,8 @@ function AddProblemPage() {
       attempts: 1,
       dateSolved: new Date().toISOString().split('T')[0],
       mistake: false,
+      timeComplexity: "",
+      approach: "",
       keyIdea: ""
     });
   };
@@ -98,11 +103,9 @@ function AddProblemPage() {
               onChange={handleChange}
               className="w-full bg-dash-bg border border-dash-border rounded-lg px-4 py-2.5 text-dash-text focus:outline-none focus:border-dash-accent focus:ring-1 focus:ring-dash-accent transition-all appearance-none"
             >
-              <option value="LeetCode">LeetCode</option>
-              <option value="Codeforces">Codeforces</option>
-              <option value="HackerRank">HackerRank</option>
-              <option value="GeeksForGeeks">GeeksForGeeks</option>
-              <option value="Other">Other</option>
+              {PLATFORMS.map((platform) => (
+                <option key={platform} value={platform}>{platform}</option>
+              ))}
             </select>
           </div>
           <div>
@@ -198,6 +201,31 @@ function AddProblemPage() {
               className="w-full bg-dash-bg border border-dash-border rounded-lg px-4 py-2.5 text-dash-text focus:outline-none focus:border-dash-accent focus:ring-1 focus:ring-dash-accent transition-all"
             />
           </div>
+        </div>
+
+        {/* Row 6 */}
+        <div>
+          <label className="block text-sm font-medium text-dash-text-muted mb-1.5">Time Complexity</label>
+          <input
+            name="timeComplexity"
+            value={formData.timeComplexity}
+            onChange={handleChange}
+            type="text"
+            placeholder="e.g. O(n), O(n log n)..."
+            className="w-full bg-dash-bg border border-dash-border rounded-lg px-4 py-2.5 text-dash-text focus:outline-none focus:border-dash-accent focus:ring-1 focus:ring-dash-accent transition-all"
+          />
+        </div>
+
+        <div className="pt-2">
+          <label className="block text-sm font-medium text-dash-text-muted mb-1.5">Approach</label>
+          <textarea
+            name="approach"
+            value={formData.approach}
+            onChange={handleChange}
+            rows="6"
+            placeholder="Write the full approach you used: idea, steps, edge cases, and why it works."
+            className="w-full bg-dash-bg border border-dash-border rounded-lg px-4 py-3 text-dash-text focus:outline-none focus:border-dash-accent focus:ring-1 focus:ring-dash-accent transition-all resize-y min-h-36"
+          ></textarea>
         </div>
 
         {/* Mistake Checkbox */}

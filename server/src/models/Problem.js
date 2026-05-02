@@ -10,6 +10,8 @@ const problemSchema = new mongoose.Schema(
     difficulty: { type: String, enum: ["Easy", "Medium", "Hard"], default: "Easy" },
     status: { type: String, enum: ["Solved", "Not Solved", "Revision"], default: "Not Solved" },
     attempts: { type: Number, default: 1 },
+    timeComplexity: { type: String, default: "" },
+    approach: { type: String, default: "" },
     keyIdea: { type: String, default: "" },
     mistake: { type: Boolean, default: false },
     dateSolved: { type: Date, default: Date.now },

@@ -1,21 +1,25 @@
 import { useState } from "react";
 import { useProblems } from "../hooks/useProblems";
-import { Search, Filter, ExternalLink, Trash2, Edit3, AlertTriangle } from "lucide-react";
+import { PLATFORMS } from "../utils/constants";
+import { Search, Filter, ExternalLink, Trash2, AlertTriangle } from "lucide-react";
 
 function ProblemsPage() {
   const { problems, deleteProblem } = useProblems();
   const [searchTerm, setSearchTerm] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
+  const [platformFilter, setPlatformFilter] = useState("All");
 
   const filteredProblems = problems.filter((p) => {
-    const matchesSearch = p.problemName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const matchesSearch = p.problemName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           p.topic.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          p.pattern.toLowerCase().includes(searchTerm.toLowerCase());
+                          p.pattern.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (p.approach || "").toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDifficulty = difficultyFilter === "All" || p.difficulty === difficultyFilter;
     const matchesStatus = statusFilter === "All" || p.status === statusFilter;
+    const matchesPlatform = platformFilter === "All" || p.platform === platformFilter;
     
-    return matchesSearch && matchesDifficulty && matchesStatus;
+    return matchesSearch && matchesDifficulty && matchesStatus && matchesPlatform;
   });
 
   const getDifficultyColor = (diff) => {
@@ -52,7 +56,18 @@ function ProblemsPage() {
           />
         </div>
         
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
+          <select
+            value={platformFilter}
+            onChange={(e) => setPlatformFilter(e.target.value)}
+            className="bg-dash-bg border border-dash-border rounded-lg px-4 py-2 text-dash-text focus:outline-none focus:border-dash-accent transition-all text-sm appearance-none min-w-[140px]"
+          >
+            <option value="All">All Platforms</option>
+            {PLATFORMS.map((platform) => (
+              <option key={platform} value={platform}>{platform}</option>
+            ))}
+          </select>
+
           <select 
             value={difficultyFilter}
             onChange={(e) => setDifficultyFilter(e.target.value)}
@@ -129,7 +144,19 @@ function ProblemsPage() {
                     {problem.pattern}
                   </span>
                 )}
+                {problem.timeComplexity && (
+                  <span className="text-xs px-2.5 py-1 rounded-full bg-dash-surface-hover text-dash-text-muted font-medium border border-dash-border">
+                    {problem.timeComplexity}
+                  </span>
+                )}
               </div>
+
+              {problem.approach && (
+                <div className="bg-dash-bg rounded-lg p-3 text-sm text-dash-text-muted mb-3 border border-dash-border/50">
+                  <div className="font-medium text-dash-text mb-1">Approach</div>
+                  <p className="whitespace-pre-line line-clamp-4">{problem.approach}</p>
+                </div>
+              )}
 
               {problem.keyIdea && (
                 <div className="bg-dash-bg rounded-lg p-3 text-sm text-dash-text-muted italic mb-4 line-clamp-2 border border-dash-border/50 flex-1">
